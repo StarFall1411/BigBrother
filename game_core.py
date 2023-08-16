@@ -15,7 +15,7 @@ def nominations(houseGuestList,houseGuests,hohWinner,playerName):
     i = True
     while i:
         if hohWinner == playerName:
-            nom1,nom2 = required_functions.userInput('nominations',houseGuestList,playerName,'','')
+            nom1,nom2 = required_functions.UserInput('nominations',houseGuestList,playerName,'','')
         else:
             nom1 = random.choice(houseGuestList)
             nom2 = random.choice(houseGuestList)
