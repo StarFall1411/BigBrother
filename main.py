@@ -22,7 +22,7 @@ onGoing = True
 while onGoing:
     hohWinner = game_core.hohCompetition(houseGuestList,houseGuests,cantPlay)
     nom1,nom2 = game_core.nominations(houseGuestList,houseGuests,hohWinner,playerName)
-    vetoPlayers = game_core.vetoNominations(houseGuestList,houseGuests,hohWinner,nom1,nom2)
+    vetoPlayers = game_core.vetoNominations(houseGuestList,hohWinner,nom1,nom2)
     vetoWinner = game_core.vetoCompetition(houseGuests,vetoPlayers)
     nom1,nom2 = game_core.vetoCeremony(houseGuestList,houseGuests,playerName,vetoWinner,hohWinner,nom1,nom2)
     cantPlay,evictee = game_core.evictionCeremony(houseGuestList,hohWinner,nom1,nom2,jury)

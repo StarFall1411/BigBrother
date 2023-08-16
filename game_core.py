@@ -26,7 +26,7 @@ def nominations(houseGuestList,houseGuests,hohWinner,playerName):
     houseGuests[nom2].beenNominated = True
     return nom1,nom2
 
-def vetoNominations(houseGuestList,houseGuests,hohWinner,nom1,nom2):
+def vetoNominations(houseGuestList,hohWinner,nom1,nom2):
     print('The Veto players are!:')
     playingVeto = []
     if len(houseGuestList) < 6:
@@ -36,15 +36,15 @@ def vetoNominations(houseGuestList,houseGuests,hohWinner,nom1,nom2):
         input()
         return playingVeto
     playingVeto = [hohWinner,nom1,nom2]
-    guestList = houseGuestList[:]
-    guestList.remove(hohWinner)
-    guestList.remove(nom1)
-    guestList.remove(nom2)
+    vetoAvalability = houseGuestList[:]
+    vetoAvalability.remove(hohWinner)
+    vetoAvalability.remove(nom1)
+    vetoAvalability.remove(nom2)
     count = 0
     while count < 3:
-        chosen = random.choice(guestList)
+        chosen = random.choice(vetoAvalability)
         playingVeto.append(chosen)
-        guestList.remove(chosen)
+        vetoAvalability.remove(chosen)
         count += 1
     for person in playingVeto:
         print(person)
