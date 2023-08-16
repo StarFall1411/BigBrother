@@ -63,7 +63,7 @@ def vetoCeremony(houseGuestList,houseGuests,playerName,vetoWinner,hohWinner,nom1
     removeIneligibleGuests(nomineeAvalibility,vetoWinner,hohWinner,nom1,nom2)
     #if player wins veto
     if vetoWinner == playerName:
-        result,vetochoice = required_functions.userInput('power of veto',nomineeAvalibility,playerName,nom1,nom2)
+        result,vetoChoice = required_functions.UserInput('power of veto',nomineeAvalibility,playerName,nom1,nom2)
     #player does not win veto
     else:
         #if either nominees win veto
