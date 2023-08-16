@@ -6,25 +6,24 @@ def hohCompetition(houseGuestList,houseGuests,cantPlay):
     canPlay = houseGuestList[:]
     if cantPlay is not None:
         canPlay.remove(cantPlay)
-    winner = random.choice(houseGuestList)
+    winner = random.choice(canPlay)
     input('\n' + winner + ' wins HOH!')
     houseGuests[winner].hohWins += 1
     return winner
 
 def nominations(houseGuestList,houseGuests,hohWinner,playerName):
-    i = True
-    while i:
-        if hohWinner == playerName:
-            nom1,nom2 = required_functions.UserInput('nominations',houseGuestList,playerName,'','')
-        else:
-            nom1 = random.choice(houseGuestList)
-            nom2 = random.choice(houseGuestList)
-        if hohWinner is not nom1 and hohWinner is not nom2 and nom1 is not nom2:
-            i = False
-            input(hohWinner + ' has nominated...')
-            input(nom1 + ' and ' + nom2 + ' for eviction!\n')
-            houseGuests[nom1].beenNominated = True
-            houseGuests[nom2].beenNominated = True
+    canBeNominated = houseGuestList[:]
+    canBeNominated.remove(hohWinner)
+    if hohWinner == playerName:
+        nom1,nom2 = required_functions.UserInput('nominations',canBeNominated,playerName,'','')
+    else:
+        nom1 = random.choice(canBeNominated)
+        canBeNominated.remove(nom1)
+        nom2 = random.choice(canBeNominated)
+    input(hohWinner + ' has nominated...')
+    input(nom1 + ' and ' + nom2 + ' for eviction!\n')
+    houseGuests[nom1].beenNominated = True
+    houseGuests[nom2].beenNominated = True
     return nom1,nom2
 
 def vetoNominations(houseGuestList,houseGuests,hohWinner,nom1,nom2):

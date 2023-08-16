@@ -1,12 +1,18 @@
 def UserInput(type,guestList,playerName,nom1,nom2):
     if type == 'nominations':
         #Prints players availible to nominate
-        for guest in guestList:
-            if guest != playerName:
-                print(guest)
-        nom1 = input('Enter your first nomination ')
-        nom2 = input('Enter your second nomination ')
-        print('\n')
+        go = True
+        while go:
+            for guest in guestList:
+                if guest != playerName:
+                    print(guest)
+            nom1 = input('Enter your first nomination ')
+            nom2 = input('Enter your second nomination ')
+            if(nom1 is not nom2 and nom1 in guestList and nom2 in guestList):
+                go = False
+                print('\n')
+            else:
+                input('One or both of your nominees is invalid. Please try again.')
         return nom1,nom2
 
     elif type == "powerofveto":
