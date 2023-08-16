@@ -119,7 +119,8 @@ def vetoCeremony(houseGuestList,houseGuests,playerName,vetoWinner,hohWinner,nom1
         replaceNom = required_functions.UserInput('hohvetoreplacement',guestList,playerName,'','')
     #a different hoh picks a new nominee
     else:
-        replaceNom = random.choice([guestList])
+        replaceNom = random.choice(guestList)
+        input('The HOH, ',hohWinner,', has nominated ',replaceNom,' as the replacement nominee.')
     #new nominee gets placed in current noms
     if nom1 is None:
         nom1 = replaceNom
