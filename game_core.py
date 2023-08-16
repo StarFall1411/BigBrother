@@ -59,27 +59,11 @@ def vetoCompetition(houseGuests,vetoPlayers):
 
 def vetoCeremony(houseGuestList,houseGuests,playerName,vetoWinner,hohWinner,nom1,nom2):
     #Removes people from houseGuestList that can be nominated if veto is used
-    guestList = houseGuestList[:]
-    if vetoWinner == hohWinner:
-        guestList.remove(hohWinner)
-        guestList.remove(nom1)
-        guestList.remove(nom2)
-    elif vetoWinner == nom1:
-        guestList.remove(hohWinner)
-        guestList.remove(vetoWinner)
-        guestList.remove(nom2)
-    elif vetoWinner == nom2:
-        guestList.remove(hohWinner)
-        guestList.remove(vetoWinner)
-        guestList.remove(nom1)
-    else:
-        guestList.remove(hohWinner)
-        guestList.remove(vetoWinner)
-        guestList.remove(nom1)
-        guestList.remove(nom2)
+    nomineeAvalibility = houseGuestList[:]
+    removeIneligibleGuests(nomineeAvalibility,vetoWinner,hohWinner,nom1,nom2)
     #if player wins veto
     if vetoWinner == playerName:
-        result,vetochoice = required_functions.userInput('power of veto',guestList,playerName,nom1,nom2)
+        result,vetochoice = required_functions.userInput('power of veto',nomineeAvalibility,playerName,nom1,nom2)
     #player does not win veto
     else:
         #if either nominees win veto
@@ -88,11 +72,13 @@ def vetoCeremony(houseGuestList,houseGuests,playerName,vetoWinner,hohWinner,nom1
             input('To use the power of veto on themself!')
             result = 'yes'
             vetoChoice = nom1
+            nom1 = None
         elif vetoWinner == nom2:
             input(nom2 + ' has decided...')
             input('To use the power of veto on themself!')
             result = 'yes'
             vetoChoice = nom2
+            nom2 == None
         #if a different player wins veto
         else:
             #veto winner automatically doesnt use it at 4 players and not hoh
@@ -105,27 +91,32 @@ def vetoCeremony(houseGuestList,houseGuests,playerName,vetoWinner,hohWinner,nom1
             vetoChoice = random.choice([nom1,nom2])
     #Results of the veto being used or not
     #sets either of the nominees vetoed to None
+    input(vetoWinner + ' has decided...')
     if result == 'yes':
-        if vetoChoice == nom1:
+        if vetoChoice == nom1 and nom1 is not vetoWinner:
+            input('To use the power of veto on ' + nom1 + '.')
             nom1 = None
-        elif vetoChoice == nom2:
+        elif vetoChoice == nom2 and nom2 is not vetoWinner:
+            input('To use the power of veto on ' + nom2 + '.')
             nom2 == None
     #returns original nominees
-    else:
+    elif result == 'no' and nom1 is not vetoWinner and nom2 is not vetoWinner:
+        input('Not to use the power of veto.')
         return nom1,nom2
     #the hoh picks a new nominee
     if hohWinner == playerName:
-        replaceNom = required_functions.UserInput('hohvetoreplacement',guestList,playerName,'','')
+        replaceNom = required_functions.UserInput('hohvetoreplacement',nomineeAvalibility,playerName,'','')
     #a different hoh picks a new nominee
     else:
-        replaceNom = random.choice(guestList)
-        input('The HOH, ',hohWinner,', has nominated ',replaceNom,' as the replacement nominee.')
+        replaceNom = random.choice(nomineeAvalibility)
+        input('The HOH, ' + hohWinner +', has nominated ' + replaceNom +' as the replacement nominee.')
     #new nominee gets placed in current noms
     if nom1 is None:
         nom1 = replaceNom
     elif nom2 is None:
         nom2 = replaceNom
     return nom1,nom2
+    
 def evictionCeremony(houseGuestList,hohWinner,nom1,nom2,jury):
     #Removes hohWinner, nom1, and nom2 from voting in the ceremony
     votingList = houseGuestList[:]
@@ -167,6 +158,25 @@ def evictionCeremony(houseGuestList,hohWinner,nom1,nom2,jury):
         houseGuestList.remove(nom2)
         return hohWinner,nom2
     
+def removeIneligibleGuests(nomineeAvalibility,vetoWinner,hohWinner,nom1,nom2):
+    if vetoWinner == hohWinner:
+        nomineeAvalibility.remove(hohWinner)
+        nomineeAvalibility.remove(nom1)
+        nomineeAvalibility.remove(nom2)
+    elif vetoWinner == nom1:
+        nomineeAvalibility.remove(hohWinner)
+        nomineeAvalibility.remove(vetoWinner)
+        nomineeAvalibility.remove(nom2)
+    elif vetoWinner == nom2:
+        nomineeAvalibility.remove(hohWinner)
+        nomineeAvalibility.remove(vetoWinner)
+        nomineeAvalibility.remove(nom1)
+    else:
+        nomineeAvalibility.remove(hohWinner)
+        nomineeAvalibility.remove(vetoWinner)
+        nomineeAvalibility.remove(nom1)
+        nomineeAvalibility.remove(nom2)
+
 def finalThreeCompetitions(houseGuestList,houseGuests):
     houseGuestsCopy = houseGuestList[:]
     input("It's time for the final three competitions!")
